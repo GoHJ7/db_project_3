@@ -106,7 +106,7 @@ Four EduOM_Test(Four volId, Four handle, Boolean getcharFlag){
   press_enter_for_continue(getcharFlag);
   printf("\n\n");
 
-  /* Test for EduOM_CreateObjecT() when a near object is not NULL */
+  /* Test for EduOM_CreateObject() when a near object is not NULL */
   printf("*Test 1_2 : Test for EduOM_CreateObject() when a near object is not NULL\n");
   printf("->Insert new objects into the page until the page is full\n\n");
 
