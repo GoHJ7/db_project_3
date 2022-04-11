@@ -83,7 +83,6 @@ Four EduOM_CompactPage(
     SlottedPage	tpage;		/* temporay page used to save the given page */
     Object *obj;		/* pointer to the object in the data area */
     Two    apageDataOffset;	/* where the next object is to be moved */
-    
     Four   len;			/* length of object + length of ObjectHdr */
     Two    lastSlot;		/* last non empty slot */
     Two    i;			/* index variable */
@@ -94,8 +93,6 @@ Four EduOM_CompactPage(
     apageDataOffset = 0;
     i=0;
     while(i<tpage.header.nSlots){
-        //tpageDataOffset = tpage.slot[-i].offset;
-
         if(tpage.slot[-i].offset != EMPTYSLOT && i != slotNo){
             obj = tpage.data +tpage.slot[-i].offset;
 
@@ -110,7 +107,6 @@ Four EduOM_CompactPage(
     }
 
     if(slotNo != NIL){
-        //tpageDataOffset = tpage.slot[-slotNo].offset;
         obj = tpage.data + tpage.slot[-slotNo].offset;
         len = ALIGNED_LENGTH(obj->header.length + sizeof(ObjectHdr)); 
         memcpy(apage->data + apageDataOffset, obj, len);

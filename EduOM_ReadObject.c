@@ -119,7 +119,7 @@ Four EduOM_ReadObject(
     if(length == REMAINDER){
         memcpy(buf, obj->data + start, obj->header.length);
 
-        e = BfM_FreeTrain(&pid, PAGE_BUF); //sequence is important, we should not use apage after FreeTrain()
+        e = BfM_FreeTrain(&pid, PAGE_BUF); 
         if( e < 0 ) ERR( e );
 
         return obj->header.length;
@@ -127,7 +127,7 @@ Four EduOM_ReadObject(
     else{
         memcpy(buf, obj->data + start, length);
 
-        e = BfM_FreeTrain(&pid, PAGE_BUF); //sequence is important, we should not use apage after FreeTrain()
+        e = BfM_FreeTrain(&pid, PAGE_BUF); 
         if( e < 0 ) ERR( e );
 
         return length;

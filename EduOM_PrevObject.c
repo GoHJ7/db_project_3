@@ -105,7 +105,6 @@ Four EduOM_PrevObject(
 
     }
 
-    // iterate SlottedPages
     while(1){
         if(pid.pageNo == NIL){
             return(EOS);
@@ -113,8 +112,7 @@ Four EduOM_PrevObject(
         
         e = BfM_GetTrain(&pid, &apage, PAGE_BUF);        
         if( e < 0 ) ERR( e );
-
-        // search for non-empty slot
+        
         if(curOID == NULL)
             i = apage->header.nSlots - 1;
         else
@@ -146,13 +144,13 @@ Four EduOM_PrevObject(
         }
 
         pageNo = apage->header.prevPage;
-        curOID = NULL; //make it iterate from the last slot of the new page
+        curOID = NULL; 
         
 
-        e = BfM_FreeTrain(&pid, PAGE_BUF); //sequence is important, we should not use apage after FreeTrain()
+        e = BfM_FreeTrain(&pid, PAGE_BUF); 
         if( e < 0 ) ERR( e );
 
-        pid.pageNo = pageNo; //volNo is same
+        pid.pageNo = pageNo;
 
     }
 

@@ -181,7 +181,7 @@ Four eduom_CreateObject(
     /* Error check whether using not supported functionality by EduOM */
     if(ALIGNED_LENGTH(length) > LRGOBJ_THRESHOLD) ERR(eNOTSUPPORTED_EDUOM);
     
-    //check catPage
+
     e = BfM_GetTrain((TrainID*)catObjForFile, (char**)&catPage, PAGE_BUF);
     if( e < 0 ) ERR( e );
 
@@ -194,19 +194,18 @@ Four eduom_CreateObject(
     
 
 
-    //check neededSpace
+   
     alignedLen = ALIGNED_LENGTH(length);   
     neededSpace = sizeof(ObjectHdr) + alignedLen + sizeof(SlottedPageSlot); 
 
-    //select page
+    
     Boolean pageSelected = FALSE;
     if(nearObj != NULL){
         pid.pageNo = nearObj->pageNo;
         pid.volNo = nearObj->volNo;
         pageSelected = TRUE;
     }
-    else{ //nearObj == NULL
-
+    else{ 
 
         if(neededSpace <= sizeof(catPage->data) * 1 / 10 && pageSelected == FALSE){
             if(catEntry->availSpaceList10 >= 0){
@@ -259,7 +258,6 @@ Four eduom_CreateObject(
     e = BfM_GetTrain(&pid, &apage, PAGE_BUF);
     if( e < 0 ) ERR( e );
 
-    //if page does not have enough space
     if(SP_FREE(apage) < neededSpace){
         e = BfM_FreeTrain(&pid, 0);
         if( e < 0 ) ERR( e );
@@ -294,20 +292,20 @@ Four eduom_CreateObject(
         apage->header.spaceListPrev = NIL;
         apage->header.spaceListNext = NIL;
         apage->slot[0].offset = EMPTYSLOT;
-        SET_PAGE_TYPE(apage, SLOTTED_PAGE_TYPE); //flags
+        SET_PAGE_TYPE(apage, SLOTTED_PAGE_TYPE); 
 
         e = om_FileMapAddPage(catObjForFile, (PageID*)nearObj, &pid);
         if (e < 0) ERRB1(e, &pid, PAGE_BUF);
 
 
     }
-    else{ //if page has enough space
+    else{ 
 
         e = om_RemoveFromAvailSpaceList(catObjForFile, &pid, apage);
         if (e < 0) ERRB1(e, &pid, PAGE_BUF);
 
         if(SP_CFREE(apage) < neededSpace){ 
-            //nearObj page has enough space, but not enough contiguous space
+            
             e = EduOM_CompactPage(apage, -1);
             if( e < 0 ) ERR( e );
 
@@ -316,7 +314,7 @@ Four eduom_CreateObject(
 
 
 
-    //insert object
+   
     obj = &apage->data[apage->header.free];
     obj->header = *objHdr;
     memcpy(obj->data, data, length);
