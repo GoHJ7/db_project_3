@@ -87,11 +87,13 @@ Four EduOM_CompactPage(
     Two    lastSlot;		/* last non empty slot */
     Two    i;			/* index variable */
 
-    memcpy(&tpage, apage, PAGESIZE);
+    
 
     len = 0;
     apageDataOffset = 0;
     i=0;
+    
+    memcpy(&tpage, apage, PAGESIZE);
     while(i<tpage.header.nSlots){
         if(tpage.slot[-i].offset != EMPTYSLOT && i != slotNo){
             obj = tpage.data +tpage.slot[-i].offset;
